@@ -1,0 +1,42 @@
+html {
+    color: white;
+    font-family: Nurom;
+    background-color: black;
+    text-align: center;
+    display: grid;
+    cursor: pointer;
+    transition: background 1s ease;
+}
+
+
+header {
+    font-size: xx-large;
+    background-color: darkslategray;
+    padding: 10px;
+    letter-spacing: 3px;
+}
+
+input {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+button {
+    width: 60%;
+    height: 100px;
+    font-size: xx-large;
+    font-family: Nurom;
+    background-color: #1e1e2f;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    letter-spacing: 3px;
+
+
+}
+
+@font-face {
+    font-family: Nurom;
+    src: url(/fonts/Nurom-Bold.otf);
+
+}
