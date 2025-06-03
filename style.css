@@ -1,39 +1,73 @@
 html {
     color: rgb(221, 212, 212);
-    font-family: Nurom;
-    background-color: black;
+    font-family: Montserrat;
+    background-color: rgb(32, 32, 32);
     display: grid;
     cursor: pointer;
     transition: background 1s ease;
+    text-align: center;
 }
 
 
 header {
-    font-size: xx-large;
     background-color: #393939;
-    padding: 10px;
-    border-radius: 20px 4px 20px;
-    text-align: center;
+    border-radius: 20px 10px 20px;
 }
 
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 10px;
+    display: flex;
+    justify-content: left;
+    gap: 20px;
+}
+
+.navbar li a {
+    text-decoration: none;
+    color: white;
+}
+
+.navbar li a:hover {
+    text-decoration: underline;
+}
+
+
 input {
-    width: 60%;
+    width: 70%;
     height: 50px;
     font-family: Arial, Helvetica, sans-serif;
+    margin: 20px 1px 0px;
+}
+
+.inputGroup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
 }
 
 button {
-    width: 60%;
+    width: 70%;
     height: 100px;
     font-size: xx-large;
-    font-family: Nurom;
+    font-family: Montserrat;
     background-color: #393939;
     color: rgb(221, 212, 212);
     padding: 12px 20px;
     border: none;
     border-radius: 8px;
+}
+
+button:hover {
+    background-color: grey;
+}
 
 
+
+#plannerOutput {
+    color: white;
 }
 
 footer {
@@ -47,8 +81,10 @@ footer {
     padding: 10px 0;
 }
 
+
 @font-face {
     font-family: Nurom;
     src: url(/fonts/Nurom-Bold.otf);
-
+    font-family: Montserrat;
+    src: url(/fonts/Montserrat-VariableFont_wght.ttf)
 }

@@ -3,20 +3,42 @@
 
 <head>
     <title>Daily Planner</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <header>Daily Planner</header>
-    <p>Input your daily schedule</p>
-    <input id="promptInfo"><br></br>
-    <button id="mainButton">Generate Schedule</button>
+    <header>
+        <nav class="navbar">
+            <ul>
+                <li><a href="index.html">Daily Planner</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="inputGroup">
+        <input type='text' id="promptInfo" placeholder="Describe your day...">
+        <button id="mainButton">Generate</button>
+        <div id="plannerOutput"></div>
+    </div>
+    <script>
+        const input = document.getElementById("promptInfo");
+        const myButton = document.getElementById("mainButton");
+
+        myButton.addEventListener('click', async () => {
+            inputValue = input.value;
+            const data = await fetch("http://localhost:8080/process", {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ input: inputValue })
+            });
+            //document.getElementById("responseOutput").textContent = data.result;
+        })
+    </script>
 </body>
 
-<div id="planner-output"></div>
-<link rel="stylesheet" href="style.css">
 
 <footer>
-    <p>Thanks for using the AI Daily Planner</p>
+    <p>@ 2025 Andrew Markham</p>
 </footer>
 
 </html>
