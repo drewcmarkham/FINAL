@@ -1,15 +1,24 @@
-const http = require('http');
-const url = require('url');
-const fs = require('fs');
-const path = require('path');
-const OpenAI = require("openai");
-require("dotenv").config();
+import http from 'http';
+import url from 'url';
+import fs from 'fs';
+import path from 'path';
+import { OpenAI } from 'openai';
+import { config } from 'dotenv';
+
+config();
 
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
 
-http.createServer(function (req, res) {
+const response = await openai.responses.create({
+    model: "gpt-4.1",
+    input: "Tell me a three sentence bedtime story about a unicorn."
+});
+
+console.log(response.output[0].content[0].text);
+
+const server = http.createServer(function (req, res) {
     //run server and serve all files
     const parsedUrl = url.parse(req.url);
     let pathname = "." + parsedUrl.pathname;
