@@ -1,60 +1,75 @@
 import http from 'http';
 import url from 'url';
+import { fileURLToPath } from 'url';
 import fs from 'fs';
 import path from 'path';
+import { dirname } from 'path';
 import { OpenAI } from 'openai';
 import { config } from 'dotenv';
 
 config();
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
-
-const response = await openai.responses.create({
-    model: "gpt-4.1",
-    input: "Tell me a three sentence bedtime story about a unicorn."
-});
-
-console.log(response.output[0].content[0].text);
 
 const server = http.createServer(function (req, res) {
     //run server and serve all files
     const parsedUrl = url.parse(req.url);
     let pathname = "." + parsedUrl.pathname;
 
-    if (pathname === './') {
-        pathname = './index.html';
-    }
-
-    if (pathname.endsWith('html')) res.writeHead(200, { 'Content-Type': "text/html" });
-    else if (pathname.endsWith('css')) res.writeHead(200, { 'Content-Type': "text/css" });
-    else if (pathname.endsWith('js')) res.writeHead(200, { 'Content-Type': "application/js" });
-    else if (pathname.endsWith('ttf')) res.writeHead(200, { 'Content-Type': "font/ttf" });
-    const filePath = path.join(__dirname, pathname);
-    const file = fs.readFileSync(filePath);
-    res.end(file);
-
     //get request & data
-    if (req.method === 'POST' && req.url === '.process') {
+    if (req.method === 'POST' && req.url === '/process') {
         let body = '';
         req.on('data', chunk => {
             body += chunk;
         });
 
-        req.on('end', () => {
+        req.on('end', async () => {
             try {
                 const obj = JSON.parse(body);
                 const input = obj.input;
                 //api response
+                const response = await openai.chat.completions.create({
+                    model: "gpt-4",
+                    messages: [
+                        { role: "user", content: "Create a personalized daily planner based on the following details. Include time-blocked activities from morning to evening, productivity tips, reminders for meals, breaks, and any important events or goals. Structure it clearly with bullet points or time slots. Here are the details:" + input }
+                    ]
+                });
+                const planner = response.choices[0].message.content;
+                console.log(planner);
                 res.writeHead(200, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ response }));
+                res.end(JSON.stringify({ planner }));
             } catch (e) {
                 res.writeHead(400, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ error: 'Invalid JSON' }));
             }
         });
         return;
+    }
+
+    else {
+        if (pathname === './') {
+            pathname = './index.html';
+        }
+
+        if (pathname.endsWith('html')) res.writeHead(200, { 'Content-Type': "text/html" });
+        else if (pathname.endsWith('css')) res.writeHead(200, { 'Content-Type': "text/css" });
+        else if (pathname.endsWith('js')) res.writeHead(200, { 'Content-Type': "application/javascript" });
+        else if (pathname.endsWith('ttf')) res.writeHead(200, { 'Content-Type': "font/ttf" });
+        else if (pathname.endsWith('ico')) res.writeHead(200, { 'Content-Type': "image/x-icon" });
+
+        try {
+            const filePath = path.join(__dirname, pathname);
+            const file = fs.readFileSync(filePath);
+            res.end(file);
+            return;
+        } catch {
+
+        }
     }
     res.writeHead(404, { 'Content-Type': 'text/plain' });
     res.end('Not Found');

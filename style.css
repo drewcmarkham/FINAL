@@ -68,6 +68,8 @@ button:hover {
 
 #plannerOutput {
     color: white;
+    display: flex;
+    justify-content: left;
 }
 
 footer {

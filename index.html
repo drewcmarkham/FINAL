@@ -4,6 +4,7 @@
 <head>
     <title>Daily Planner</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 
 <body>
@@ -18,7 +19,25 @@
     <div class="inputGroup">
         <input type='text' id="promptInfo" placeholder="Describe your day...">
         <button id="mainButton">Generate</button>
-        <div id="plannerOutput"></div>
+        <div id="plannerOutput">7:00 AM - Wake up, personal hygiene
+            7:30 AM - Meditation/Morning Exercise
+            8:00 AM - Healthy Breakfast
+            8:30 AM - Free time/Prep for the day
+            9:00 AM - Begin Work/Important Tasks
+            12:00 PM – Lunch
+            12:30 PM - Relax, leisure activities or chores
+            12:50 PM - Prepare to leave for the dentist appointment (Depends on travel time)
+            1:00 PM - Dentist appointment
+            2:00 PM - Return Home/Travel time (Depends on travel time)
+            2:30 PM - Continue with work or other pending tasks
+            4:00 PM - Break/Snack time
+            4:30 PM - Exercise/Any physical activity
+            5:30 PM - Continue with tasks or start with new projects
+            7:00 PM - Dinner preparation, cooking
+            8:00 PM - Dinner
+            8:30 PM - Recreational activities (watching TV shows, reading, etc.)
+            10:00 PM - Personal hygiene, preparing for bed
+            10:30 PM - Sleep</div>
     </div>
     <script>
         const input = document.getElementById("promptInfo");
@@ -31,7 +50,8 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ input: inputValue })
             });
-            //document.getElementById("responseOutput").textContent = data.result;
+            const result = await data.json();
+            document.getElementById("plannerOutput").textContent = result.planner;
         })
     </script>
 </body>
