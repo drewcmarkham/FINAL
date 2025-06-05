@@ -9,6 +9,7 @@ html {
 }
 
 
+
 header {
     background-color: #393939;
     border-radius: 20px 10px 20px;
@@ -32,6 +33,11 @@ header {
     text-decoration: underline;
 }
 
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
 
 input {
     width: 70%;
@@ -46,6 +52,8 @@ input {
     align-items: center;
     flex-direction: column;
     gap: 20px;
+    animation-name: fade-in;
+    animation-duration: 2s;
 }
 
 button {
@@ -64,7 +72,10 @@ button:hover {
     background-color: grey;
 }
 
-
+.inputGroup {
+    flex-grow: 1;
+    padding: 20px;
+}
 
 #plannerOutput {
     color: white;
@@ -72,6 +83,11 @@ button:hover {
     justify-content: left;
     padding: 20px;
     border: 5px, #393939;
+}
+
+#bio {
+    animation-name: fade-in;
+    animation-duration: 2s;
 }
 
 footer {
@@ -91,4 +107,14 @@ footer {
     src: url(/fonts/Nurom-Bold.otf);
     font-family: Montserrat;
     src: url(/fonts/Montserrat-VariableFont_wght.ttf)
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
