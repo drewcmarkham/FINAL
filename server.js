@@ -36,7 +36,7 @@ const server = http.createServer(function (req, res) {
                 const response = await openai.chat.completions.create({
                     model: "gpt-4",
                     messages: [
-                        { role: "user", content: "Create a personalized daily planner based on the following details. Include time-blocked activities from morning to evening, productivity tips, reminders for meals, breaks, and any important events or goals. Structure it clearly with bullet points or time slots. Here are the details:" + input }
+                        { role: "user", content: "Create a personalized daily planner based on the following details. Include time-blocked activities from morning to evening. Structure Create a personalized daily planner based on the following details. Format the output using plain text with line breaks between entries so that it can be displayed in HTML using <br> tags. Include time-blocked activities from morning to night, with suggested start times. Keep it organized and easy to scan. Details: " + input }
                     ]
                 });
                 const planner = response.choices[0].message.content;
