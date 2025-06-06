@@ -18,16 +18,33 @@
     </header>
     <div class="inputGroup">
         <input type='text' id="promptInfo" placeholder="Describe your day, make sure to include specific times...">
-        <button id="mainButton">Generate</button>
+        <button id="mainButton" class="loading-container">Generate<span class="dots"></span></button>
         <div id="plannerOutput"></div>
     </div>
     <script>
         const input = document.getElementById("promptInfo");
         const myButton = document.getElementById("mainButton");
 
+        let intervalId;
+
+        function startLoading() {
+            let dotCount = 0;
+            myButton.disabled = true;
+            intervalId = setInterval(() => {
+                myButton.textContent = "Generating" + ".".repeat(dotCount);
+                dotCount = (dotCount + 1) % 4;
+            }, 500);
+        }
+
+        function stopLoading() {
+            clearInterval(intervalId);
+            myButton.textContent = 'Generate';
+            myButton.disabled = false;
+        }
+
         myButton.addEventListener('click', async () => {
             inputValue = input.value;
-            myButton.innerHTML = "Generating...";
+            startLoading();
             const data = await fetch("http://localhost:8080/process", {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
@@ -35,7 +52,7 @@
             });
             const result = await data.json();
             document.getElementById("plannerOutput").innerHTML = result.planner.replace(/\n/g, '<br>');
-            myButton.innerHTML = "Generate";
+            stopLoading();
         })
     </script>
 </body>
